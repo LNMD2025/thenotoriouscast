@@ -18,3 +18,11 @@ YOUTUBE_URL = ""
 [observability]
 enabled = true
 head_sampling_rate = 1
+
+[[routes]]
+pattern = "thenotoriouscast.com"
+custom_domain = true
+
+[[routes]]
+pattern = "www.thenotoriouscast.com"
+custom_domain = true

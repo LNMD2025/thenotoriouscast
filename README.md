@@ -2,7 +2,10 @@
 
 Public site for [Dean Linder-Leighton](https://www.thenotoriouscast.com/about)’s podcast — conversations on leadership and faith, training and nutrition, business and brand.
 
-Live site: [https://www.thenotoriouscast.com](https://www.thenotoriouscast.com)
+Live site: [https://www.thenotoriouscast.com](https://www.thenotoriouscast.com)  
+Workers preview: [https://thenotoriouscast.dlinderleighton.workers.dev](https://thenotoriouscast.dlinderleighton.workers.dev)
+
+Both custom domains are attached to this Worker (`thenotoriouscast.com` and `www.thenotoriouscast.com`). The Worker 301s apex traffic to `www`.
 
 The Worker fetches the Riverside RSS feed at request time (`RIVERSIDE_RSS_URL`, ~10 minute edge cache). New Riverside uploads appear without a redeploy. Episodes are never invented.
 
@@ -29,19 +32,19 @@ npx wrangler deploy
 
 Required account permission: Workers deploy. If credentials are missing, deploy stops at login — the site is still fully in this repo.
 
-### Attach thenotoriouscast.com and www.thenotoriouscast.com
+`wrangler.toml` declares both custom domains:
 
-1. In Cloudflare, add the zone `thenotoriouscast.com` (or transfer DNS if it already lives elsewhere).
-2. Open **Workers & Pages → thenotoriouscast → Settings → Domains & Routes**.
-3. Add custom domains:
-   - `www.thenotoriouscast.com`
-   - `thenotoriouscast.com` (apex)
-4. Confirm DNS:
-   - `www` CNAME to the Worker target Cloudflare shows
-   - Apex as a CNAME flattening / ANAME / A records as the dashboard instructs
-5. Keep both hostnames pointed at this Worker. The Worker issues a **301** from `thenotoriouscast.com` → `https://www.thenotoriouscast.com` (same path and query).
+```toml
+[[routes]]
+pattern = "thenotoriouscast.com"
+custom_domain = true
 
-Do not hard-code zone routes in `wrangler.toml` until the zone is in the same Cloudflare account — attaching domains in the dashboard is enough.
+[[routes]]
+pattern = "www.thenotoriouscast.com"
+custom_domain = true
+```
+
+Those hostnames are already attached. The Worker issues a **301** from `thenotoriouscast.com` → `https://www.thenotoriouscast.com` (same path and query). The workers.dev URL remains [https://thenotoriouscast.dlinderleighton.workers.dev](https://thenotoriouscast.dlinderleighton.workers.dev).
 
 ## Environment
 
