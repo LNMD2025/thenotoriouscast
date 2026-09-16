@@ -1,0 +1,20 @@
+name = "thenotoriouscast"
+main = "src/index.ts"
+compatibility_date = "2026-09-16"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[vars]
+RIVERSIDE_RSS_URL = "https://api.riverside.com/hosting/VYqtCBp6.rss"
+SITE_URL = "https://www.thenotoriouscast.com"
+APPLE_PODCASTS_URL = ""
+SPOTIFY_URL = ""
+YOUTUBE_URL = ""
+
+[observability]
+enabled = true
+head_sampling_rate = 1
