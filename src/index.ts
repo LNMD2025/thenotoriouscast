@@ -11,7 +11,7 @@ import {
 } from "./pages";
 import { apexRedirectLocation, parseRoute, trailingSlashLocation } from "./routes";
 
-const STATIC_FILE = /\.(?:css|js|svg|png|ico|jpg|jpeg|webp|woff2?|txt|map)$/i;
+const STATIC_FILE = /\.(?:css|js|svg|png|ico|jpg|jpeg|webp|woff2?|map)$/i;
 
 export default {
   async fetch(request, env, ctx): Promise<Response> {
@@ -27,13 +27,13 @@ export default {
       return Response.redirect(slash, 308);
     }
 
-    if (STATIC_FILE.test(url.pathname)) {
-      return env.ASSETS.fetch(request);
-    }
-
     const route = parseRoute(url.pathname);
     if (route.name === "robots") {
       return renderRobots(env, url);
+    }
+
+    if (STATIC_FILE.test(url.pathname)) {
+      return env.ASSETS.fetch(request);
     }
 
     const { podcast, error } = await safePodcast(env, ctx);
